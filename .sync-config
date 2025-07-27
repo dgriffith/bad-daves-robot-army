@@ -1,0 +1,39 @@
+# Agent Sync Configuration
+# This file allows you to customize the behavior of the sync-agents.sh script
+
+# Directories (uncomment to override defaults)
+# CLAUDE_AGENTS_DIR="$HOME/.claude/agents"
+# REPO_AGENTS_DIR="./subagents"
+
+# Default sync behavior
+# DEFAULT_COMMAND="sync"  # What to do when script is run without arguments
+
+# File patterns to include (space-separated glob patterns)
+INCLUDE_PATTERNS="*.md"
+
+# File patterns to exclude (space-separated glob patterns)
+# EXCLUDE_PATTERNS="*.tmp *.bak .DS_Store"
+
+# Conflict resolution strategy
+# Options: ask (default), local (keep local), remote (keep remote), newest (keep newer)
+# CONFLICT_STRATEGY="ask"
+
+# Auto-sync settings
+# AUTO_SYNC_ENABLED=false
+# AUTO_SYNC_INTERVAL=300  # seconds between checks in watch mode
+
+# Backup settings
+# CREATE_BACKUPS=true
+# BACKUP_DIR=".sync-backups"
+# MAX_BACKUPS=10
+
+# Notification settings (for watch mode)
+# NOTIFY_ON_SYNC=true  # Show desktop notification on sync (requires terminal-notifier on macOS)
+
+# Git integration
+# AUTO_COMMIT_SYNCED=false  # Automatically commit after successful sync
+# COMMIT_MESSAGE="Sync Claude agents"
+
+# Logging
+# LOG_LEVEL="info"  # Options: debug, info, warn, error
+# LOG_FILE=".sync-agents.log"

@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+#
+# post-merge hook - Check agent sync status after pulling changes
+#
+# This hook runs after a successful merge (including git pull) and
+# reminds you to sync agents if the repository has newer versions.
+
+# Colors for output
+YELLOW='\033[1;33m'
+GREEN='\033[0;32m'
+NC='\033[0m' # No Color
+
+# Check if subagents directory was updated
+if git diff HEAD@{1} HEAD --name-only | grep -q "^subagents/"; then
+    echo ""
+    echo -e "${YELLOW}Claude agents were updated in this pull${NC}"
+    echo "Running sync status check..."
+    echo ""
+    
+    # Show sync status
+    ./scripts/sync-agents.sh status
+    
+    echo ""
+    echo -e "${GREEN}Tip: Run 'make push' to update your local Claude agents${NC}"
+    echo ""
+fi
+
+exit 0

@@ -1,0 +1,81 @@
+#!/usr/bin/env bash
+#
+# pre-commit hook - Check agent sync status before committing
+#
+# This hook checks if Claude agents are in sync before allowing a commit.
+# It won't block the commit but will warn about out-of-sync agents.
+
+# Colors for output
+YELLOW='\033[1;33m'
+RED='\033[0;31m'
+NC='\033[0m' # No Color
+
+# Only check if we're committing files in the subagents directory
+if git diff --cached --name-only | grep -q "^subagents/"; then
+    echo "Checking Claude agent sync status..."
+    
+    # Run sync status check
+    STATUS_OUTPUT=$(./scripts/sync-agents.sh status 2>&1)
+    
+    # Check for out-of-sync agents
+    if echo "$STATUS_OUTPUT" | grep -qE "(Only in|newer|Conflict)"; then
+        echo -e "${YELLOW}Warning: Claude agents are not fully synchronized${NC}"
+        echo ""
+        echo "$STATUS_OUTPUT" | grep -E "(Only in|newer|Conflict)" | while read -r line; do
+            echo "  $line"
+        done
+        echo ""
+        echo -e "${YELLOW}Consider running 'make sync' before committing${NC}"
+        echo ""
+        
+        # Give user a chance to cancel
+        if [[ -t 0 ]]; then  # Check if running interactively
+            read -p "Continue with commit anyway? (y/N) " -n 1 -r
+            echo
+            if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+                echo -e "${RED}Commit cancelled${NC}"
+                exit 1
+            fi
+        fi
+    fi
+fi
+
+# Check if any agents in ~/.claude/agents/ are newer than repo versions
+# This helps catch cases where you edited agents directly in Claude
+CLAUDE_DIR="$HOME/.claude/agents"
+REPO_DIR="./subagents"
+
+if [[ -d "$CLAUDE_DIR" ]]; then
+    NEWER_IN_CLAUDE=false
+    
+    for agent in "$CLAUDE_DIR"/*.md; do
+        if [[ -f "$agent" ]]; then
+            basename=$(basename "$agent")
+            repo_file="$REPO_DIR/$basename"
+            
+            if [[ -f "$repo_file" ]]; then
+                # Compare modification times
+                if [[ "$OSTYPE" == "darwin"* ]]; then
+                    claude_mtime=$(stat -f %m "$agent" 2>/dev/null || echo 0)
+                    repo_mtime=$(stat -f %m "$repo_file" 2>/dev/null || echo 0)
+                else
+                    claude_mtime=$(stat -c %Y "$agent" 2>/dev/null || echo 0)
+                    repo_mtime=$(stat -c %Y "$repo_file" 2>/dev/null || echo 0)
+                fi
+                
+                if [[ $claude_mtime -gt $repo_mtime ]]; then
+                    NEWER_IN_CLAUDE=true
+                    break
+                fi
+            fi
+        fi
+    done
+    
+    if [[ "$NEWER_IN_CLAUDE" == true ]]; then
+        echo -e "${YELLOW}Note: Some agents in ~/.claude/agents/ are newer than repository versions${NC}"
+        echo "Run 'make pull' to update the repository with latest changes"
+        echo ""
+    fi
+fi
+
+exit 0
