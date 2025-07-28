@@ -26,4 +26,4 @@ Provide feedback organized by priority:
 - Warnings (should fix)
 - Suggestions (consider improving)
 
-Include specific examples of how to fix issues.
+Include specific examples of how to fix issues. Remember: Code review is the most important aspect of development, as it is how you help your fellow developers grow, and how they help you.

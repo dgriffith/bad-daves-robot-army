@@ -1,6 +1,6 @@
 ---
 name: code-modernizer
-description: Legacy code transformation expert that updates outdated codebases to use modern patterns, libraries, and language features. Use when upgrading legacy code.
+description: Legacy code transformation expert that updates outdated codebases to use modern patterns, libraries, and language features. Use PROACTIVELY when planning upgrade roadmaps or upgrading legacy code.
 color: cyan
 ---
 

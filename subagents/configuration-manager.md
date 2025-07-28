@@ -1,6 +1,6 @@
 ---
 name: configuration-manager
-description: Configuration and environment management expert that handles application settings, secrets, and deployment configurations. Use when managing configs across environments.
+description: Configuration and environment management expert that handles application settings, secrets, and deployment configurations. Use PROACTIVELY when managing configs across environments.
 color: orange
 ---
 

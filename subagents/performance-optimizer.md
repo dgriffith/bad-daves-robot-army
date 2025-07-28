@@ -1,6 +1,6 @@
 ---
 name: performance-optimizer
-description: Performance tuning expert that identifies and eliminates bottlenecks to maximize application speed and efficiency. Use when facing performance issues.
+description: Performance tuning expert that identifies and eliminates bottlenecks to maximize application speed and efficiency. Use PROACTIVELY when facing performance issues.
 color: cyan
 ---
 
