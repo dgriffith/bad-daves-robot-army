@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 #
-# sync-agents.sh - Sync Claude agents between ~/.claude/agents/ and ./subagents/
+# sync-agents.sh - Sync Claude agents and commands between ~/.claude/ and repository
 #
 # Usage:
 #   ./scripts/sync-agents.sh [command] [options]
 #
 # Commands:
-#   pull     - Copy agents from ~/.claude/agents/ to ./subagents/
-#   push     - Copy agents from ./subagents/ to ~/.claude/agents/
+#   pull     - Copy agents and commands from ~/.claude/ to repository
+#   push     - Copy agents and commands from repository to ~/.claude/
 #   sync     - Bidirectional sync (newer files win)
 #   status   - Show sync status and differences
 #   watch    - Watch for changes and auto-sync
@@ -22,7 +22,9 @@ set -euo pipefail
 
 # Configuration
 CLAUDE_AGENTS_DIR="$HOME/.claude/agents"
+CLAUDE_COMMANDS_DIR="$HOME/.claude/commands"
 REPO_AGENTS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)/subagents"
+REPO_COMMANDS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)/slash-commands"
 SCRIPT_NAME=$(basename "$0")
 
 # Colors for output
@@ -72,9 +74,21 @@ check_directories() {
         mkdir -p "$CLAUDE_AGENTS_DIR"
     fi
     
+    if [[ ! -d "$CLAUDE_COMMANDS_DIR" ]]; then
+        error "Claude commands directory not found: $CLAUDE_COMMANDS_DIR"
+        echo "Creating directory..."
+        mkdir -p "$CLAUDE_COMMANDS_DIR"
+    fi
+    
     if [[ ! -d "$REPO_AGENTS_DIR" ]]; then
         error "Repository agents directory not found: $REPO_AGENTS_DIR"
         exit 1
+    fi
+    
+    if [[ ! -d "$REPO_COMMANDS_DIR" ]]; then
+        error "Repository commands directory not found: $REPO_COMMANDS_DIR"
+        echo "Creating directory..."
+        mkdir -p "$REPO_COMMANDS_DIR"
     fi
 }
 
@@ -131,8 +145,10 @@ copy_file() {
     fi
     
     if [[ -f "$dst" && "$FORCE" != true ]]; then
+        set +e
         compare_files "$src" "$dst"
         local result=$?
+        set -e
         
         if [[ $result -eq 0 ]]; then
             verbose "Skipping $(basename "$src") - files are identical"
@@ -176,6 +192,31 @@ pull_agents() {
     fi
 }
 
+# Pull commands from Claude directory to repository
+pull_commands() {
+    log "Pulling commands from $CLAUDE_COMMANDS_DIR to $REPO_COMMANDS_DIR"
+    
+    local count=0
+    for command in "$CLAUDE_COMMANDS_DIR"/*.md; do
+        if [[ -f "$command" ]]; then
+            copy_file "$command" "$REPO_COMMANDS_DIR/$(basename "$command")" "Pulled"
+            ((count++)) || true
+        fi
+    done
+    
+    if [[ $count -eq 0 ]]; then
+        warn "No command files found in $CLAUDE_COMMANDS_DIR"
+    else
+        success "Pulled $count command(s)"
+    fi
+}
+
+# Pull both agents and commands
+pull_all() {
+    pull_agents
+    pull_commands
+}
+
 # Push agents from repository to Claude directory
 push_agents() {
     log "Pushing agents from $REPO_AGENTS_DIR to $CLAUDE_AGENTS_DIR"
@@ -195,103 +236,166 @@ push_agents() {
     fi
 }
 
-# Bidirectional sync
-sync_agents() {
-    log "Performing bidirectional sync"
+# Push commands from repository to Claude directory
+push_commands() {
+    log "Pushing commands from $REPO_COMMANDS_DIR to $CLAUDE_COMMANDS_DIR"
+    
+    local count=0
+    for command in "$REPO_COMMANDS_DIR"/*.md; do
+        if [[ -f "$command" ]]; then
+            copy_file "$command" "$CLAUDE_COMMANDS_DIR/$(basename "$command")" "Pushed"
+            ((count++)) || true
+        fi
+    done
+    
+    if [[ $count -eq 0 ]]; then
+        warn "No command files found in $REPO_COMMANDS_DIR"
+    else
+        success "Pushed $count command(s)"
+    fi
+}
+
+# Push both agents and commands
+push_all() {
+    push_agents
+    push_commands
+}
+
+# Bidirectional sync for a single directory pair
+sync_directory_pair() {
+    local claude_dir="$1"
+    local repo_dir="$2"
+    local type="$3"
     
     # First, sync files that exist in both locations
-    for agent in "$REPO_AGENTS_DIR"/*.md; do
-        if [[ -f "$agent" ]]; then
-            local basename=$(basename "$agent")
-            local claude_file="$CLAUDE_AGENTS_DIR/$basename"
+    for file in "$repo_dir"/*.md; do
+        if [[ -f "$file" ]]; then
+            local basename=$(basename "$file")
+            local claude_file="$claude_dir/$basename"
             
             if [[ -f "$claude_file" ]]; then
-                compare_files "$agent" "$claude_file"
+                set +e
+                compare_files "$file" "$claude_file"
                 local result=$?
+                set -e
                 
                 case $result in
                     0)
                         verbose "Skipping $basename - files are identical"
                         ;;
                     1)
-                        copy_file "$agent" "$claude_file" "Updated in Claude dir"
+                        copy_file "$file" "$claude_file" "Updated in Claude dir"
                         ;;
                     2)
-                        copy_file "$claude_file" "$agent" "Updated in repo"
+                        copy_file "$claude_file" "$file" "Updated in repo"
                         ;;
                     3)
                         warn "Conflict for $basename - manual resolution required"
                         ;;
                 esac
             else
-                copy_file "$agent" "$claude_file" "Added to Claude dir"
+                copy_file "$file" "$claude_file" "Added to Claude dir"
             fi
         fi
     done
     
     # Then, copy files that only exist in Claude dir
-    for agent in "$CLAUDE_AGENTS_DIR"/*.md; do
-        if [[ -f "$agent" ]]; then
-            local basename=$(basename "$agent")
-            local repo_file="$REPO_AGENTS_DIR/$basename"
+    for file in "$claude_dir"/*.md; do
+        if [[ -f "$file" ]]; then
+            local basename=$(basename "$file")
+            local repo_file="$repo_dir/$basename"
             
             if [[ ! -f "$repo_file" ]]; then
-                copy_file "$agent" "$repo_file" "Added to repo"
+                copy_file "$file" "$repo_file" "Added to repo"
             fi
         fi
     done
-    
-    success "Bidirectional sync complete"
 }
 
-# Show sync status
-show_status() {
-    log "Sync Status"
+# Bidirectional sync
+sync_agents() {
+    log "Performing bidirectional sync for agents"
+    sync_directory_pair "$CLAUDE_AGENTS_DIR" "$REPO_AGENTS_DIR" "agent"
+    success "Agent sync complete"
+}
+
+# Bidirectional sync for commands
+sync_commands() {
+    log "Performing bidirectional sync for commands"
+    sync_directory_pair "$CLAUDE_COMMANDS_DIR" "$REPO_COMMANDS_DIR" "command"
+    success "Command sync complete"
+}
+
+# Sync both agents and commands
+sync_all() {
+    log "Performing bidirectional sync"
+    sync_agents
+    sync_commands
+    success "Full bidirectional sync complete"
+}
+
+# Show status for a directory pair
+show_directory_status() {
+    local claude_dir="$1"
+    local repo_dir="$2"
+    local type="$3"
+    
     echo
-    echo "Claude agents directory: $CLAUDE_AGENTS_DIR"
-    echo "Repository agents directory: $REPO_AGENTS_DIR"
+    echo "${type} Status:"
+    echo "Claude directory: $claude_dir"
+    echo "Repository directory: $repo_dir"
     echo
     
-    # List all unique agent files
-    local all_agents=()
-    for agent in "$CLAUDE_AGENTS_DIR"/*.md "$REPO_AGENTS_DIR"/*.md; do
-        if [[ -f "$agent" ]]; then
-            all_agents+=("$(basename "$agent")")
+    # List all unique files
+    local all_files=()
+    for file in "$claude_dir"/*.md "$repo_dir"/*.md; do
+        if [[ -f "$file" ]]; then
+            all_files+=("$(basename "$file")")
         fi
     done
     
     # Remove duplicates
-    local unique_agents=()
-    while IFS= read -r agent; do
-        unique_agents+=("$agent")
-    done < <(printf '%s\n' "${all_agents[@]}" | sort -u)
+    local unique_files=()
+    while IFS= read -r file; do
+        unique_files+=("$file")
+    done < <(printf '%s\n' "${all_files[@]}" | sort -u)
     
-    if [[ ${#unique_agents[@]} -eq 0 ]]; then
-        warn "No agent files found"
+    if [[ ${#unique_files[@]} -eq 0 ]]; then
+        warn "No $type files found"
         return
     fi
     
-    printf "%-30s %-20s %-20s %s\n" "Agent" "Claude" "Repository" "Status"
+    printf "%-30s %-20s %-20s %s\n" "$type" "Claude" "Repository" "Status"
     printf "%-30s %-20s %-20s %s\n" "-----" "------" "----------" "------"
     
-    for agent in "${unique_agents[@]}"; do
-        local claude_file="$CLAUDE_AGENTS_DIR/$agent"
-        local repo_file="$REPO_AGENTS_DIR/$agent"
+    for file in "${unique_files[@]}"; do
+        local claude_file="$claude_dir/$file"
+        local repo_file="$repo_dir/$file"
         local claude_status="Missing"
         local repo_status="Missing"
         local sync_status=""
         
         if [[ -f "$claude_file" ]]; then
-            claude_status=$(date -r "$claude_file" "+%Y-%m-%d %H:%M" 2>/dev/null || echo "Present")
+            if [[ "$OSTYPE" == "darwin"* ]]; then
+                claude_status=$(stat -f "%Sm" -t "%Y-%m-%d %H:%M" "$claude_file" 2>/dev/null || echo "Present")
+            else
+                claude_status=$(date -r "$claude_file" "+%Y-%m-%d %H:%M" 2>/dev/null || echo "Present")
+            fi
         fi
         
         if [[ -f "$repo_file" ]]; then
-            repo_status=$(date -r "$repo_file" "+%Y-%m-%d %H:%M" 2>/dev/null || echo "Present")
+            if [[ "$OSTYPE" == "darwin"* ]]; then
+                repo_status=$(stat -f "%Sm" -t "%Y-%m-%d %H:%M" "$repo_file" 2>/dev/null || echo "Present")
+            else
+                repo_status=$(date -r "$repo_file" "+%Y-%m-%d %H:%M" 2>/dev/null || echo "Present")
+            fi
         fi
         
         if [[ -f "$claude_file" && -f "$repo_file" ]]; then
+            set +e
             compare_files "$claude_file" "$repo_file"
             local result=$?
+            set -e
             
             case $result in
                 0) sync_status="${GREEN}In sync${NC}" ;;
@@ -305,27 +409,38 @@ show_status() {
             sync_status="${BLUE}Only in repo${NC}"
         fi
         
-        printf "%-30s %-20s %-20s %b\n" "$agent" "$claude_status" "$repo_status" "$sync_status"
+        printf "%-30s %-20s %-20s %b\n" "$file" "$claude_status" "$repo_status" "$sync_status"
     done
 }
 
+# Show sync status
+show_status() {
+    log "Sync Status"
+    
+    # Show agent status
+    show_directory_status "$CLAUDE_AGENTS_DIR" "$REPO_AGENTS_DIR" "Agent"
+    
+    # Show command status
+    show_directory_status "$CLAUDE_COMMANDS_DIR" "$REPO_COMMANDS_DIR" "Command"
+}
+
 # Watch for changes
-watch_agents() {
+watch_all() {
     log "Watching for changes (Press Ctrl+C to stop)"
     
     if command -v fswatch >/dev/null 2>&1; then
         # Use fswatch if available (macOS with brew install fswatch)
-        fswatch -o "$CLAUDE_AGENTS_DIR" "$REPO_AGENTS_DIR" | while read -r event; do
+        fswatch -o "$CLAUDE_AGENTS_DIR" "$REPO_AGENTS_DIR" "$CLAUDE_COMMANDS_DIR" "$REPO_COMMANDS_DIR" | while read -r event; do
             log "Change detected, syncing..."
-            sync_agents
+            sync_all
             echo
         done
     elif command -v inotifywait >/dev/null 2>&1; then
         # Use inotify-tools on Linux
         while true; do
-            inotifywait -r -e modify,create,delete,move "$CLAUDE_AGENTS_DIR" "$REPO_AGENTS_DIR" >/dev/null 2>&1
+            inotifywait -r -e modify,create,delete,move "$CLAUDE_AGENTS_DIR" "$REPO_AGENTS_DIR" "$CLAUDE_COMMANDS_DIR" "$REPO_COMMANDS_DIR" >/dev/null 2>&1
             log "Change detected, syncing..."
-            sync_agents
+            sync_all
             echo
         done
     else
@@ -335,11 +450,11 @@ watch_agents() {
         # Simple polling fallback
         local last_check=""
         while true; do
-            local current_check=$(find "$CLAUDE_AGENTS_DIR" "$REPO_AGENTS_DIR" -name "*.md" -exec stat -f %m {} \; 2>/dev/null | sort | md5)
+            local current_check=$(find "$CLAUDE_AGENTS_DIR" "$REPO_AGENTS_DIR" "$CLAUDE_COMMANDS_DIR" "$REPO_COMMANDS_DIR" -name "*.md" -exec stat -f %m {} \; 2>/dev/null | sort | md5)
             
             if [[ "$current_check" != "$last_check" ]]; then
                 log "Change detected, syncing..."
-                sync_agents
+                sync_all
                 last_check="$current_check"
                 echo
             fi
@@ -392,19 +507,19 @@ fi
 
 case $COMMAND in
     pull)
-        pull_agents
+        pull_all
         ;;
     push)
-        push_agents
+        push_all
         ;;
     sync)
-        sync_agents
+        sync_all
         ;;
     status)
         show_status
         ;;
     watch)
-        watch_agents
+        watch_all
         ;;
     *)
         error "Unknown command: $COMMAND"

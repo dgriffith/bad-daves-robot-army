@@ -104,3 +104,97 @@ You can customize sync behavior by editing `.sync-config`. This file allows you 
 - **Directory not found**: The script will create `~/.claude/agents/` if it doesn't exist
 - **Conflicts**: When files have same timestamp but different content, you'll be prompted
 - **Watch mode on macOS**: Install `fswatch` with `brew install fswatch` for better performance
+
+## Slash Commands
+
+This repository includes slash commands that invoke specialized subagents to analyze and create improvement plans for various aspects of your codebase. All commands generate reports in the `/plans` directory without making any changes to your code.
+
+### Available Commands
+
+#### `/doc-review [path]`
+Analyzes documentation coverage and creates a comprehensive documentation improvement plan.
+- **Scope**: Optional path parameter (file, directory, or module). Defaults to entire project.
+- **Output**: `plans/documentation-review-{timestamp}.md`
+- **Covers**: README files, inline comments, API docs, configuration guides, examples
+
+#### `/refactor-review [path]`
+Examines code quality and identifies refactoring opportunities.
+- **Scope**: Optional path parameter. Defaults to entire project.
+- **Output**: `plans/refactoring-review-{timestamp}.md`
+- **Analyzes**: Code duplication, complexity, SOLID violations, naming clarity
+
+#### `/security-review [path]`
+Performs security analysis and creates a vulnerability mitigation plan.
+- **Scope**: Optional path parameter. Defaults to entire project.
+- **Output**: `plans/security-review-{timestamp}.md`
+- **Checks**: Hardcoded secrets, injection risks, authentication issues, OWASP compliance
+
+#### `/arch-review [path]`
+Reviews architectural patterns and structural integrity.
+- **Scope**: Optional path parameter. Defaults to entire project.
+- **Output**: `plans/architecture-review-{timestamp}.md`
+- **Evaluates**: Dependencies, SOLID principles, coupling, design patterns
+
+#### `/test-review [path]`
+Assesses test coverage and testing practices.
+- **Scope**: Optional path parameter. Defaults to entire project.
+- **Output**: `plans/testing-review-{timestamp}.md`
+- **Measures**: Coverage metrics, test quality, missing test cases
+
+#### `/perf-review [path]`
+Identifies performance bottlenecks and optimization opportunities.
+- **Scope**: Optional path parameter. Defaults to entire project.
+- **Output**: `plans/performance-review-{timestamp}.md`
+- **Finds**: Algorithm complexity issues, memory leaks, caching opportunities
+
+#### `/modernization-review [path]`
+Analyzes code for outdated patterns and creates a modernization roadmap.
+- **Scope**: Optional path parameter. Defaults to entire project.
+- **Output**: `plans/modernization-review-{timestamp}.md`
+- **Identifies**: Deprecated APIs, legacy code, outdated dependencies, upgrade paths
+
+#### `/tooling-review [path]`
+Evaluates developer experience and identifies tooling improvements.
+- **Scope**: Optional path parameter. Defaults to entire project.
+- **Output**: `plans/tooling-review-{timestamp}.md`
+- **Analyzes**: Setup complexity, build times, automation opportunities, workflow efficiency
+
+### Usage Examples
+
+```bash
+# Review documentation for entire project
+/doc-review
+
+# Analyze refactoring needs for a specific module
+/refactor-review src/services
+
+# Security audit of authentication code
+/security-review src/auth
+
+# Architecture review of API layer
+/arch-review src/api
+
+# Test coverage analysis for utils
+/test-review src/utils
+
+# Performance review of data processing
+/perf-review src/processors
+
+# Modernization assessment for legacy module
+/modernization-review src/legacy
+
+# Developer tooling and workflow analysis
+/tooling-review
+```
+
+### Plan Reports
+
+All slash commands generate detailed markdown reports in the `/plans` directory containing:
+- Executive summary of findings
+- Current state analysis
+- Prioritized improvement tasks
+- Implementation strategies
+- Effort estimates
+- Risk assessments
+
+These reports help you systematically improve your codebase by providing actionable, prioritized recommendations from specialized agents.
