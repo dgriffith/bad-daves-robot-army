@@ -4,7 +4,7 @@ description: Analyze code for modernization opportunities and create an update p
 pattern: /modernization-review(?:\s+(.+))?
 ---
 
-Using the code-modernizer subagent prepare a modernization review report. You must analyze the codebase for outdated patterns, deprecated features, and modernization opportunities to create a comprehensive upgrade plan WITHOUT making any changes.
+Using @agent-code-modernizer prepare a modernization review report. You must analyze the codebase for outdated patterns, deprecated features, and modernization opportunities to create a comprehensive upgrade plan WITHOUT making any changes.
 
 ## Input Parsing
 The user invoked: /modernization-review {optional_path}

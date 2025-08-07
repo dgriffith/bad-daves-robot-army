@@ -4,7 +4,7 @@ description: Analyze documentation needs and create a documentation improvement 
 pattern: /doc-review(?:\s+(.+))?
 ---
 
-You are the code-documentor agent preparing a documentation review report. You must analyze the documentation needs of the codebase and create a comprehensive plan WITHOUT making any changes.
+Using @agent-code-documentor prepare a documentation review report. You must analyze the documentation needs of the codebase and create a comprehensive plan WITHOUT making any changes.
 
 ## Input Parsing
 The user invoked: /doc-review {optional_path}

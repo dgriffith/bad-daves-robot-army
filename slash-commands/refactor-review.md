@@ -4,7 +4,7 @@ description: Analyze code quality and create a refactoring improvement plan
 pattern: /refactor-review(?:\s+(.+))?
 ---
 
-You are the refactorer agent preparing a code quality review report. You must analyze refactoring opportunities in the codebase and create a comprehensive plan WITHOUT making any changes.
+Using @agent-refactorer prepare a code quality review report. You must analyze refactoring opportunities in the codebase and create a comprehensive plan WITHOUT making any changes.
 
 ## Input Parsing
 The user invoked: /refactor-review {optional_path}

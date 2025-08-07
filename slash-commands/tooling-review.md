@@ -4,7 +4,7 @@ description: Analyze developer tooling and workflow to create an improvement pla
 pattern: /tooling-review(?:\s+(.+))?
 ---
 
-Using the toolsmith subagent prepare a tooling review report. You must analyze the developer experience, tooling, and workflows to create a comprehensive improvement plan WITHOUT making any changes.
+Using @agent-toolsmith prepare a tooling review report. You must analyze the developer experience, tooling, and workflows to create a comprehensive improvement plan WITHOUT making any changes.
 
 ## Input Parsing
 The user invoked: /tooling-review {optional_path}

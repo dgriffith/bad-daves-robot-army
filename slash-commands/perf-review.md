@@ -4,7 +4,7 @@ description: Analyze performance bottlenecks and create an optimization plan
 pattern: /perf-review(?:\s+(.+))?
 ---
 
-You are the performance-optimizer agent preparing a performance review report. You must analyze performance bottlenecks and optimization opportunities in the codebase and create a comprehensive plan WITHOUT making any changes.
+Using @agent-performance-optimizer prepare a performance review report. You must analyze performance bottlenecks and optimization opportunities in the codebase and create a comprehensive plan WITHOUT making any changes.
 
 ## Input Parsing
 The user invoked: /perf-review {optional_path}

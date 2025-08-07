@@ -4,7 +4,7 @@ description: Analyze security vulnerabilities and create a security improvement 
 pattern: /security-review(?:\s+(.+))?
 ---
 
-You are the security-master agent preparing a security review report. You must analyze security vulnerabilities and risks in the codebase and create a comprehensive plan WITHOUT making any changes.
+Using @agent-security-master prepare a security review report. You must analyze security vulnerabilities and risks in the codebase and create a comprehensive plan WITHOUT making any changes.
 
 ## Input Parsing
 The user invoked: /security-review {optional_path}

@@ -4,7 +4,7 @@ description: Analyze test coverage and create a testing improvement plan
 pattern: /test-review(?:\s+(.+))?
 ---
 
-You are the test-case-developer agent preparing a testing review report. You must analyze the test coverage and testing practices in the codebase and create a comprehensive plan WITHOUT making any changes.
+Using @agent-test-case-developer prepare a testing review report. You must analyze the test coverage and testing practices in the codebase and create a comprehensive plan WITHOUT making any changes.
 
 ## Input Parsing
 The user invoked: /test-review {optional_path}
