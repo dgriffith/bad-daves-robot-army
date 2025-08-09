@@ -1,37 +1,46 @@
 ---
 name: create-prd
-description: Create a comprehensive product requirements document with the product manager agent
+description: Create a comprehensive product requirements document for features within the current project/codebase
 pattern: /create-prd(?:\s+(.+))?
 ---
 
-Using @agent-product-manager, help create a comprehensive product requirements document (PRD) for the specified product or feature.
+Using @agent-product-manager, help create a comprehensive product requirements document (PRD) for a new feature or enhancement within the current project/codebase.
+
+## Context
+This command is for creating PRDs for features that will be implemented in the EXISTING project/codebase you're currently working in. This is NOT for creating entirely new products from scratch, but rather for planning new features, enhancements, or modules within the current project context.
 
 ## Input Parsing
 The user invoked: /create-prd {optional_initial_description}
 - If an initial description is provided, use it as the starting point
-- If no description is provided, begin by asking for the product/feature details
+- If no description is provided, begin by asking for the feature/enhancement details
 
 ## Your Task
-You are a product manager tasked with creating a comprehensive PRD. You should:
+You are a product manager tasked with creating a comprehensive PRD for a feature within the current project. You should:
 
-1. **Gather Requirements Interactively**
+1. **Understand the Current Project Context**
+   - Analyze the existing codebase structure and purpose
+   - Identify how the new feature fits within the current architecture
+   - Consider existing patterns, conventions, and constraints
+
+2. **Gather Requirements Interactively**
    - If the initial information is insufficient, ask clarifying questions
    - Focus on understanding the user's needs, business goals, and constraints
    - Don't make assumptions - ask when you need more details
 
-2. **Key Areas to Explore**
-   - Product vision and objectives
-   - Target users and personas
-   - Core features and functionality
+3. **Key Areas to Explore (Within Current Project Context)**
+   - Feature vision and how it enhances the current product
+   - Target users (existing users, new user segments)
+   - Core functionality and integration points
    - Success metrics and KPIs
-   - Technical requirements and constraints
-   - Timeline and milestones
-   - Risk assessment
-   - Dependencies and integrations
+   - Technical requirements within existing architecture
+   - Timeline considering current development cycle
+   - Risk assessment for the existing system
+   - Dependencies on current codebase and external systems
 
-3. **Interactive Process**
-   - Start by understanding what the user wants to build
-   - Ask targeted questions to fill in gaps
+4. **Interactive Process**
+   - Start by examining the current project structure and purpose
+   - Understand what feature/enhancement the user wants to add
+   - Ask targeted questions about integration with existing functionality
    - Confirm understanding before proceeding
    - Allow the user to provide additional context at any point
 

@@ -1,4 +1,7 @@
-Using the development manager subagent, create a comprehensive implementation plan from a Product Requirements Document (PRD).
+Using the development manager subagent, create a comprehensive implementation plan from a Product Requirements Document (PRD) for features within the current project/codebase.
+
+## Context
+This command generates implementation plans for features that will be developed within the EXISTING project/codebase you're currently working in. The plan should consider the current architecture, existing patterns, and technical constraints of the project. This is NOT for planning entirely new products from scratch.
 
 ## Input Parsing
 The user invoked: /implementation-plan-from-prd {prd_file_path}
@@ -6,35 +9,43 @@ The user invoked: /implementation-plan-from-prd {prd_file_path}
 - If no file path provided, list available PRDs and ask user to specify
 
 ## Your Task
-You need to analyze the provided PRD and generate a comprehensive technical implementation plan. The plan should help development managers and technical leads translate product requirements into actionable development work.
+You need to analyze the provided PRD and generate a comprehensive technical implementation plan that fits within the current project context. The plan should help development managers and technical leads translate product requirements into actionable development work that integrates with the existing codebase.
 
-### Step 1: Read and Analyze the PRD
+### Step 1: Understand Current Project Context
+- Analyze the existing codebase structure and architecture
+- Identify current technology stack and patterns
+- Review existing modules and their interactions
+- Understand the project's conventions and constraints
+
+### Step 2: Read and Analyze the PRD
 - Read the PRD file from the provided path
 - Identify key sections: executive summary, requirements, user stories, constraints, success metrics
-- Understand the project scope, complexity, and technical implications
+- Understand how the feature fits within the current project scope
+- Assess integration points with existing functionality
 
-### Step 2: Detect Project Type
-Analyze the PRD to determine the project type:
-- Web application
-- Mobile application  
-- API service
-- Data processing system
-- Infrastructure project
-- Integration project
-- Other/hybrid
+### Step 3: Detect Feature Type
+Analyze the PRD to determine the feature type within the current project:
+- New module or component
+- Enhancement to existing functionality
+- API endpoint additions
+- Data model extensions
+- Integration with external services
+- Performance optimization
+- UI/UX improvements
+- Infrastructure changes
 
-### Step 3: Generate Implementation Plan Components
+### Step 4: Generate Implementation Plan Components
 
 Create a comprehensive plan with ALL of the following sections:
 
 #### 1. Technical Architecture Breakdown
-- System architecture design (with ASCII diagrams where helpful)
-- Technology stack recommendations based on requirements
-- Database schema considerations
-- API design patterns and endpoints
-- Integration points and interfaces
-- Scalability and performance considerations
-- Security architecture
+- How the feature integrates with current architecture (with ASCII diagrams where helpful)
+- Leverage existing technology stack and patterns
+- Database schema changes or extensions needed
+- New API endpoints or modifications to existing ones
+- Integration points with current modules
+- Impact on system scalability and performance
+- Security considerations within existing framework
 
 #### 2. Development Phases and Milestones
 - Break implementation into logical phases (typically 3-5)
@@ -109,11 +120,13 @@ Format each ticket as:
 [Any important technical considerations]
 ```
 
-### Step 4: Quality Checks
+### Step 5: Quality Checks
 Before finalizing, ensure the plan:
 - Addresses all functional and non-functional requirements from the PRD
+- Properly integrates with the existing codebase architecture
+- Follows current project conventions and patterns
 - Includes realistic time estimates with appropriate buffers
-- Identifies all major technical risks
+- Identifies risks to the existing system
 - Provides clear, actionable next steps
 - Is suitable for import into project management tools
 
@@ -128,8 +141,10 @@ The output should include:
 
 ## Important Notes
 - Be specific and actionable - avoid generic recommendations
-- Consider technical debt and maintainability in your recommendations
-- Ensure estimates are realistic for a professional development team
-- Flag any areas where the PRD lacks sufficient detail for planning
-- Adapt the level of detail based on project complexity
-- Remember this is for dev managers and tech leads - be technically detailed but also consider resource management aspects
+- Work within the constraints of the existing codebase and architecture
+- Leverage existing patterns, libraries, and conventions already in use
+- Consider how the feature impacts technical debt and maintainability
+- Ensure estimates are realistic for a team familiar with the codebase
+- Flag any areas where the PRD conflicts with existing architecture
+- Adapt the level of detail based on feature complexity
+- Remember this is for dev managers and tech leads working on an existing project - focus on integration and consistency with current implementation
