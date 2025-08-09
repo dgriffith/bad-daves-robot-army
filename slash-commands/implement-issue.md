@@ -73,7 +73,7 @@ Before creating the PR, validate:
 |----------------------|----------------|
 | security | @agent-security-master |
 | performance | @agent-performance-optimizer |
-| architecture | @agent-architect-reviewer |
+| architecture | @agent-architect |
 | documentation | @agent-code-documentor |
 | test, testing | @agent-test-case-developer |
 | refactor | @agent-refactorer |

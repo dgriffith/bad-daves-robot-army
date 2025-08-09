@@ -43,7 +43,7 @@ Based on the review type and task nature, recommend the appropriate specialist:
 |-----------|------------------|
 | Security fixes | @agent-security-master |
 | Performance optimization | @agent-performance-optimizer |
-| Architecture changes | @agent-architect-reviewer |
+| Architecture changes | @agent-architect |
 | Documentation | @agent-code-documentor |
 | Testing improvements | @agent-test-case-developer |
 | Refactoring | @agent-refactorer |

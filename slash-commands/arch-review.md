@@ -4,7 +4,7 @@ description: Analyze architectural patterns and create an architecture improveme
 pattern: /arch-review(?:\s+(.+))?
 ---
 
-Using @agent-architect-reviewer prepare an architectural review report. You must analyze the codebase architecture and create a comprehensive improvement plan WITHOUT making any changes.
+Using @agent-architect prepare an architectural review report. You must analyze the codebase architecture and create a comprehensive improvement plan WITHOUT making any changes.
 
 ## Input Parsing
 The user invoked: /arch-review {optional_path}

@@ -162,7 +162,7 @@ graph TD
 
 | Sub-task Type | Assigned Specialist |
 |--------------|-------------------|
-| API endpoints | @agent-architect-reviewer |
+| API endpoints | @agent-architect |
 | Database changes | @agent-configuration-manager |
 | UI components | @agent-accessibility-specialist |
 | Testing | @agent-test-case-developer |
