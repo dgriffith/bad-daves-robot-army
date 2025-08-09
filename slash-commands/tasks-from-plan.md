@@ -4,7 +4,7 @@ description: Convert a review plan into GitHub issues for tracking
 pattern: /tasks-from-plan(?:\s+(.+))?
 ---
 
-Convert a review plan file into GitHub issues for systematic implementation. Each task in the plan will become a GitHub issue with appropriate labels and assignment recommendations.
+Convert a plan file into GitHub issues for systematic implementation. Each task in the plan will become a GitHub issue with appropriate labels and assignment recommendations.
 
 ## Input Parsing
 The user invoked: /tasks-from-plan {plan_file_path}
