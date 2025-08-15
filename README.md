@@ -2,6 +2,10 @@
 
 Repository for Claude Code artifacts, including subagents, slash commands, and hooks
 
+## License
+
+This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
+
 ## Agent Sync Tooling
 
 This repository includes comprehensive tooling for syncing Claude agents between your local `~/.claude/agents/` directory and the repository's `subagents/` directory.
