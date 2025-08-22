@@ -17,8 +17,8 @@ Bad Dave's Robot Army is a comprehensive suite of Claude Code subagents and slas
 # Need something explained?
 /explain [any file or concept]
 
-# Ready to build? Start with a PRD
-/process-prd your-requirements.md
+# Ready to build? Create a PRD
+/create-prd your-requirements.md
 
 # Or jump straight to implementation
 /implement-issue 42
@@ -74,7 +74,7 @@ The most powerful workflow - from idea to deployed feature:
 
 ```mermaid
 graph LR
-    A[PRD Document] -->|/process-prd| B[Structured Plan]
+    A[Requirements] -->|/create-prd| B[PRD Document]
     B -->|/tasks-from-plan| C[GitHub Issues]
     C -->|/implement-issue| D[Implemented Code]
     D -->|Review & Test| E[Production]
@@ -82,14 +82,17 @@ graph LR
 
 **Example Campaign:**
 ```bash
-# Step 1: Process your requirements
-/process-prd requirements/new-feature.md
+# Step 1: Create a PRD from your requirements
+/create-prd requirements/new-feature.md
 
-# Step 2: Review the plan (in /plans directory)
-# Step 3: Create GitHub issues
-/tasks-from-plan /plans/prd-plan-*.md
+# Step 2: Review the generated PRD
+# Step 3: Process feedback if needed
+/process-prd-feedback "Add mobile support"
 
-# Step 4: Implement each issue
+# Step 4: Create GitHub issues from the PRD
+/tasks-from-plan /plans/prd-*.md
+
+# Step 5: Implement each issue
 /implement-issue 101
 /implement-issue 102
 ```
@@ -194,7 +197,7 @@ For specific scenarios:
 Always begin with `/codebase-overview` or `/explain` to understand the terrain.
 
 ### 2. Plan Before Attacking
-Use `/process-prd` or `/decompose-issue` for complex tasks. Let the development-manager break down the work.
+Use `/create-prd` or `/decompose-issue` for complex tasks. Let the development-manager break down the work.
 
 ### 3. Deploy Specialists
 Don't use generic agents when specialists exist. Use @api-designer for APIs, not @architect.
@@ -237,7 +240,7 @@ Multiple agents can work in parallel - use the todo system to track progress.
 ### For New Features
 ```bash
 # Start with requirements
-/process-prd feature-spec.md
+/create-prd feature-spec.md
 
 # Or decompose an issue
 /decompose-issue 100
@@ -257,7 +260,7 @@ For small, focused tasks:
 ### The Planned Campaign  
 For complex features:
 ```bash
-/process-prd → /tasks-from-plan → /implement-issue (multiple)
+/create-prd → /process-prd-feedback → /tasks-from-plan → /implement-issue (multiple)
 ```
 
 ### The Audit Operation
@@ -339,7 +342,7 @@ Your Robot Army helps you achieve:
 ## 🚀 Ready for Your First Mission?
 
 1. **Explore**: `/codebase-overview` - Understand your battlefield
-2. **Plan**: `/process-prd your-idea.md` - Strategic planning
+2. **Plan**: `/create-prd your-idea.md` - Strategic planning
 3. **Execute**: `/implement-issue` - Deploy your forces
 4. **Review**: `/quality-review` - Ensure victory
 
