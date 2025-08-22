@@ -16,6 +16,7 @@ The user invoked: /tasks-from-plan {plan_file_path}
 2. Parse the plan to identify discrete tasks
 3. Group tasks by priority/phase
 4. Create GitHub issues for each actionable task
+5. Be sure to create any tags you wish for the issues BEFORE trying to create the issues
 5. DO NOT implement any tasks - only create tracking issues
 
 ## Issue Creation Strategy

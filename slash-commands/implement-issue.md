@@ -126,6 +126,7 @@ View PR: https://github.com/owner/repo/pull/24
 - Git repository with GitHub remote
 - Issues must be well-formed with clear requirements
 - Appropriate specialist agents must be available
+- Be sure to create any tags you wish for the issues before trying to create the issues
 
 ## Notes
 - This command embodies the full DevOps cycle

@@ -7,9 +7,38 @@ pattern: /accessibility-review(?:\s+(.+))?
 Using @agent-accessibility-specialist prepare an accessibility review report. You must analyze the codebase for WCAG compliance, identify accessibility barriers, and create a comprehensive a11y improvement plan WITHOUT making any changes.
 
 ## Input Parsing
-The user invoked: /accessibility-review {optional_path}
-- If a path is provided, scope your analysis to that path (file, directory, or module)
-- If no path is provided, analyze the entire project
+The user invoked: /accessibility-review {optional_scope}
+
+Valid scopes:
+- **No argument**: Analyze the entire project
+- **File/directory path**: Scope analysis to that specific path
+- **"current changes"**: Analyze uncommitted changes (use `git status` and `git diff`)
+- **"recent changes"**: Analyze recent commits (use `git log` and `git diff`)
+- **"PR #123"**: Analyze a specific pull request (use `gh pr view` and `gh pr diff`)
+
+### Scope Resolution
+1. If scope is "current changes":
+   - Use `git status` to identify changed files
+   - Use `git diff` to see uncommitted changes
+   - Focus analysis on modified code only
+
+2. If scope is "recent changes":
+   - Use `git log --oneline -10` to see recent commits
+   - Use `git diff HEAD~5..HEAD` or appropriate range
+   - Analyze changes from recent development
+
+3. If scope starts with "PR":
+   - Extract PR number from the scope
+   - Use `gh pr view {number}` to get PR details
+   - Use `gh pr diff {number}` to get the changes
+   - Focus on files changed in the PR
+
+4. If scope is a path:
+   - Verify the path exists
+   - Scope analysis to that path
+
+5. If no scope provided:
+   - Analyze the entire project
 
 ## Your Task
 1. First, identify the current accessibility implementation status
