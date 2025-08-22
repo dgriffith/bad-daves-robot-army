@@ -46,7 +46,7 @@ Based on the review type and task nature, recommend the appropriate specialist:
 | Performance optimization | @agent-performance-optimizer |
 | Architecture changes | @agent-architect |
 | Documentation | @agent-code-documentor |
-| Testing improvements | @agent-test-case-developer |
+| Testing improvements | @agent-test-automator |
 | Refactoring | @agent-refactorer |
 | Modernization | @agent-code-modernizer |
 | Build/CI/CD | @agent-build-master |

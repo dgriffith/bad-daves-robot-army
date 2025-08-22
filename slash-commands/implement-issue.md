@@ -75,7 +75,7 @@ Before creating the PR, validate:
 | performance | @agent-performance-optimizer |
 | architecture | @agent-architect |
 | documentation | @agent-code-documentor |
-| test, testing | @agent-test-case-developer |
+| test, testing | @agent-test-automator |
 | refactor | @agent-refactorer |
 | modernize, upgrade | @agent-code-modernizer |
 | build, ci/cd | @agent-build-master |
@@ -110,7 +110,7 @@ The command handles various failure scenarios:
 Implementing issue #5: Create plugin validation system
 ✓ Fetched issue details
 ✓ Created branch: issue-5-plugin-validation
-✓ Selected agent: @agent-test-case-developer
+✓ Selected agent: @agent-test-automator
 ✓ Implementation in progress...
 ✓ Build successful
 ✓ Tests passing (15/15)

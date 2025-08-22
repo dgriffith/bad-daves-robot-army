@@ -1,5 +1,5 @@
 ---
-name: test-case-developer
+name: test-automator
 description: Test automation expert that designs and implements comprehensive test suites for maximum code coverage and reliability. Use PROACTIVELY after implementing new features or fixing bugs.
 color: yellow
 ---

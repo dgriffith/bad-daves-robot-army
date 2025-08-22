@@ -133,7 +133,7 @@ This issue has been broken down into the following sub-tasks:
 - [ ] #14: {title} - @agent-name
 
 ### Testing Tasks
-- [ ] #15: {title} - @agent-test-case-developer
+- [ ] #15: {title} - @agent-test-automator
 
 ### Documentation Tasks
 - [ ] #16: {title} - @agent-code-documentor
@@ -165,7 +165,7 @@ graph TD
 | API endpoints | @agent-architect |
 | Database changes | @agent-configuration-manager |
 | UI components | @agent-accessibility-specialist |
-| Testing | @agent-test-case-developer |
+| Testing | @agent-test-automator |
 | Documentation | @agent-code-documentor |
 | Performance | @agent-performance-optimizer |
 | Security | @agent-security-master |
@@ -190,10 +190,10 @@ Analyzing issue #4: Refactor sync script into modular functions
 
 Created sub-issues:
 ├── #32: Extract file comparison functions (assigned: @agent-refactorer)
-├── #33: Create validation module (assigned: @agent-test-case-developer)
+├── #33: Create validation module (assigned: @agent-test-automator)
 ├── #34: Implement error handling module (assigned: @agent-exception-handling-master)
 ├── #35: Create logging functions (assigned: @agent-logging-master)
-├── #36: Write unit tests for modules (assigned: @agent-test-case-developer)
+├── #36: Write unit tests for modules (assigned: @agent-test-automator)
 └── #37: Update documentation (assigned: @agent-code-documentor)
 
 ✓ Updated parent issue #4 with sub-task checklist
