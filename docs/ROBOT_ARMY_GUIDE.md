@@ -65,6 +65,7 @@ Bad Dave's Robot Army is a comprehensive suite of Claude Code subagents and slas
 | Agent | Specialty | When to Deploy |
 |-------|-----------|---------------|
 | **@agent-mentor** | Teaching & knowledge transfer | Learning, explanations, onboarding new recruits |
+| **@agent-junior-developer** | Learning-focused development | Fresh perspective, questioning assumptions, learning together |
 | **@agent-product-manager** | Requirements & planning | Feature planning, user stories, mission briefings |
 | **@agent-development-manager** | Technical planning & coordination | Breaking down complex campaigns |
 | **@agent-toolsmith** | Developer experience | Build tools, automation, weaponry upgrades |
@@ -148,6 +149,9 @@ For understanding and knowledge transfer:
 
 # Get personalized explanations
 /explain src/complex-algorithm.ts
+
+# Approach with fresh curiosity
+/beginners-mind authentication flow
 
 # Create a learning path
 /learn React hooks in this project
@@ -292,17 +296,19 @@ For understanding:
 
 1. **Use the mentor for onboarding** - `/learn this codebase` creates personalized boot camp training
 
-2. **Chain reviews for comprehensive analysis** - Security → Performance → Quality (The holy trinity of code warfare)
+2. **Deploy the junior developer for fresh perspectives** - `/beginners-mind` or @agent-junior-developer questions assumptions and uncovers hidden complexity
 
-3. **Let specialists own their domain** - @agent-database-designer for schemas, @agent-api-designer for endpoints. Trust your officers!
+3. **Chain reviews for comprehensive analysis** - Security → Performance → Quality (The holy trinity of code warfare)
 
-4. **Track complex work with todos** - Your mission control dashboard. Never lose sight of objectives!
+4. **Let specialists own their domain** - @agent-database-designer for schemas, @agent-api-designer for endpoints. Trust your officers!
 
-5. **Review PRs before merging** - `/arch-review "PR #123"` - Final inspection before deployment to production theater
+5. **Track complex work with todos** - Your mission control dashboard. Never lose sight of objectives!
 
-6. **Document as you go** - @agent-code-documentor should follow feature implementation. Leave no soldier's story untold!
+6. **Review PRs before merging** - `/arch-review "PR #123"` - Final inspection before deployment to production theater
 
-7. **Modernize incrementally** - Use `/modernization-review` to identify upgrade opportunities. Rome wasn't rebuilt in a day!
+7. **Document as you go** - @agent-code-documentor should follow feature implementation. Leave no soldier's story untold!
+
+8. **Modernize incrementally** - Use `/modernization-review` to identify upgrade opportunities. Rome wasn't rebuilt in a day!
 
 ## 🚁 Emergency Protocols - When Things Go FUBAR
 
