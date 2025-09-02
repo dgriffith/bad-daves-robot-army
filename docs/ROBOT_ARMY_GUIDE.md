@@ -80,10 +80,10 @@ The most powerful workflow - from idea to deployed feature:
 ```mermaid
 graph LR
     A[Requirements] -->|/create-prd| B[PRD Document]
-    B -->|/process-prd-feedback| B
-    B -->|/implementation-plan-from-prd| C[Implementation Plan]
-    C -->|/process-implementation-plan-feedback| C
-    C -->|/tasks-from-plan| D[GitHub Issues]
+    B -->|/process-prd-feedback| B1[Refined PRD]
+    B1 -->|/implementation-plan-from-prd| C[Implementation Plan]
+    C -->|/process-implementation-plan-feedback| C1[Battle-Ready Plan]
+    C1 -->|/tasks-from-plan| D[GitHub Issues]
     D -->|/implement-issue| E[Implemented Code]
     E -->|Review & Test| F[Production]
 ```
