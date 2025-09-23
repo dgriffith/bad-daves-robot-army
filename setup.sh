@@ -2,7 +2,7 @@
 #
 # setup.sh - Quick setup script for Bad Dave's Robot Army
 #
-# This script sets up the development environment after cloning the repository
+# This script sets up the environment and optionally installs agents
 
 set -euo pipefail
 
@@ -17,40 +17,27 @@ echo
 
 # Create necessary directories
 echo "Creating directories..."
-mkdir -p subagents scripts/hooks .git/hooks
+mkdir -p subagents slash-commands scripts
 
 # Make scripts executable
 echo "Making scripts executable..."
 chmod +x scripts/*.sh 2>/dev/null || true
 chmod +x setup.sh
 
-# Install git hooks
-echo "Installing git hooks..."
-cp scripts/hooks/* .git/hooks/ 2>/dev/null || true
-chmod +x .git/hooks/* 2>/dev/null || true
+# Remove git hooks section as we no longer have sync-related hooks
 
-# Check if Claude agents directory exists
-if [[ ! -d "$HOME/.claude/agents" ]]; then
-    echo -e "${YELLOW}Claude agents directory not found at ~/.claude/agents${NC}"
-    echo "Creating directory..."
+# Check if Claude directories exist
+if [[ ! -d "$HOME/.claude" ]]; then
+    echo -e "${YELLOW}Claude directory not found at ~/.claude${NC}"
+    echo "Creating directories..."
     mkdir -p "$HOME/.claude/agents"
+    mkdir -p "$HOME/.claude/commands"
 fi
 
-# Check for fswatch (macOS) or inotify-tools (Linux)
-echo "Checking for file watching tools..."
-if [[ "$OSTYPE" == "darwin"* ]]; then
-    if ! command -v fswatch >/dev/null 2>&1; then
-        echo -e "${YELLOW}fswatch not found. Install with: brew install fswatch${NC}"
-        echo "This is optional but improves watch mode performance"
-    else
-        echo -e "${GREEN}fswatch found${NC}"
-    fi
-elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
-    if ! command -v inotifywait >/dev/null 2>&1; then
-        echo -e "${YELLOW}inotify-tools not found. Install with: sudo apt-get install inotify-tools${NC}"
-        echo "This is optional but improves watch mode performance"
-    else
-        echo -e "${GREEN}inotify-tools found${NC}"
+# Check if install script exists and is executable
+if [[ -f "scripts/install-agents.sh" ]]; then
+    if [[ ! -x "scripts/install-agents.sh" ]]; then
+        chmod +x scripts/install-agents.sh
     fi
 fi
 
@@ -58,15 +45,19 @@ echo
 echo -e "${GREEN}Setup complete!${NC}"
 echo
 echo "Quick start commands:"
-echo "  make status  - Check agent sync status"
-echo "  make pull    - Pull agents from ~/.claude/agents/"
-echo "  make push    - Push agents to ~/.claude/agents/"
-echo "  make sync    - Bidirectional sync"
-echo "  make watch   - Watch for changes"
+echo "  make install         - Install agents globally to ~/.claude/"
+echo "  make install-project - Install to current project directory"
+echo "  make dry-install     - Preview what would be installed"
 echo
 echo "Run 'make help' for all available commands"
 
-# Show current sync status
+# Optional: Ask if user wants to install agents now
 echo
-echo "Current sync status:"
-./scripts/sync-agents.sh status
+read -p "Do you want to install agents globally now? (y/N) " -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]; then
+    echo "Installing agents..."
+    ./scripts/install-agents.sh --verbose
+else
+    echo "You can install agents later with 'make install'"
+fi

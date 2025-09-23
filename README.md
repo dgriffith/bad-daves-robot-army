@@ -6,9 +6,9 @@ Repository for Claude Code artifacts, including subagents, slash commands, and h
 
 This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
 
-## Agent Sync Tooling
+## Agent Installation Tooling
 
-This repository includes comprehensive tooling for syncing Claude agents between your local `~/.claude/agents/` directory and the repository's `subagents/` directory.
+This repository includes tooling for installing Claude agents and commands from the repository to your local `~/.claude/` directory or to a specific project's `.claude/` directory.
 
 ### Quick Start
 
@@ -16,46 +16,44 @@ This repository includes comprehensive tooling for syncing Claude agents between
 # Initial setup
 make setup
 
-# Check sync status
-make status
+# Install agents and commands globally to ~/.claude/
+make install
 
-# Pull agents from ~/.claude/agents/ to repository
-make pull
+# Install to a specific project directory
+make install PROJECT=/path/to/project
 
-# Push agents from repository to ~/.claude/agents/
-make push
+# Install with options
+make install ARGS='--dry-run --verbose'
 
-# Bidirectional sync (newer files win)
-make sync
-
-# Watch for changes and auto-sync
-make watch
+# Install to current project directory
+./scripts/install-agents.sh .
 ```
 
 ### Features
 
-- **Bidirectional sync** with automatic conflict detection
-- **Multiple sync modes**: pull, push, bidirectional sync
-- **Watch mode** for automatic syncing during development
-- **Git hooks** for sync reminders during commits
-- **IntelliJ IDEA** run configurations
+- **Global or project-specific installation** - Install to ~/.claude/ or to a specific project's .claude/
+- **Selective overwriting** with confirmation prompts
 - **Dry-run mode** for safe testing
-- **Detailed status reporting** with timestamps
+- **Verbose output** for detailed operation logs
+- **Force mode** to overwrite without prompting
+- **Automatic directory creation**
 
-### Sync Script Usage
+### Install Script Usage
 
-The main sync script is located at `scripts/sync-agents.sh`:
+The main install script is located at `scripts/install-agents.sh`:
 
 ```bash
 # Show help
-./scripts/sync-agents.sh --help
+./scripts/install-agents.sh --help
 
-# Commands
-./scripts/sync-agents.sh pull     # Copy from ~/.claude/agents/ to ./subagents/
-./scripts/sync-agents.sh push     # Copy from ./subagents/ to ~/.claude/agents/
-./scripts/sync-agents.sh sync     # Bidirectional sync (newer files win)
-./scripts/sync-agents.sh status   # Show sync status and differences
-./scripts/sync-agents.sh watch    # Watch for changes and auto-sync
+# Install globally to ~/.claude/
+./scripts/install-agents.sh
+
+# Install to a specific project directory
+./scripts/install-agents.sh /path/to/project
+
+# Install to current directory's project
+./scripts/install-agents.sh .
 
 # Options
 --dry-run    # Show what would be done without making changes
@@ -63,51 +61,50 @@ The main sync script is located at `scripts/sync-agents.sh`:
 --force      # Overwrite without prompting
 ```
 
-### IntelliJ IDEA Integration
+### Project-Specific Installation
 
-The repository includes pre-configured run configurations for IntelliJ IDEA:
+You can install the agents and commands to a specific project's `.claude/` directory instead of the global `~/.claude/` directory:
 
-- **Sync Agents - Pull**: Pull agents from Claude directory
-- **Sync Agents - Push**: Push agents to Claude directory
-- **Sync Agents - Bidirectional**: Two-way sync
-- **Sync Agents - Status**: Check sync status
-- **Sync Agents - Watch**: Start watch mode
+```bash
+# Install to a specific project
+./scripts/install-agents.sh /path/to/my-project
 
-These will appear in your Run Configuration dropdown after opening the project.
+# This will create:
+# /path/to/my-project/.claude/agents/
+# /path/to/my-project/.claude/commands/
+```
 
-### Git Hooks
+This is useful when you want project-specific agents and commands that don't affect your global Claude configuration.
 
-The repository includes git hooks that help maintain sync:
+### Installation Directories
 
-- **pre-commit**: Warns if agents are out of sync when committing
-- **post-merge**: Reminds to sync after pulling changes
+The install script creates and manages these directories:
 
-Install hooks with: `make install-hooks`
+- **Global installation**: `~/.claude/agents/` and `~/.claude/commands/`
+- **Project installation**: `<project>/.claude/agents/` and `<project>/.claude/commands/`
 
-### Configuration
+### Safety Features
 
-You can customize sync behavior by editing `.sync-config`. This file allows you to:
+The install script includes several safety features:
 
-- Override default directories
-- Set conflict resolution strategy
-- Configure auto-sync settings
-- Enable backups
-- Set up notifications
+- **Confirmation prompts** when overwriting existing files
+- **File comparison** to skip identical files
+- **Dry-run mode** to preview changes without making them
+- **Force mode** for automated installations
 
 ### Best Practices
 
-1. **Before starting work**: Run `make pull` to get latest agents from Claude
-2. **After editing agents**: Run `make push` to update Claude
-3. **For continuous development**: Use `make watch` in a terminal
-4. **Before committing**: Run `make status` to check sync state
-5. **After pulling changes**: Run `make push` to update local Claude agents
+1. **Global installation**: Use `make install` for your personal development environment
+2. **Project-specific**: Use `./scripts/install-agents.sh .` when working on a specific project
+3. **Test first**: Use `--dry-run` to preview what will be installed
+4. **CI/CD**: Use `--force` for automated deployments
 
 ### Troubleshooting
 
 - **Permission errors**: Ensure scripts are executable with `chmod +x scripts/*.sh`
-- **Directory not found**: The script will create `~/.claude/agents/` if it doesn't exist
-- **Conflicts**: When files have same timestamp but different content, you'll be prompted
-- **Watch mode on macOS**: Install `fswatch` with `brew install fswatch` for better performance
+- **Directory not found**: The script automatically creates necessary directories
+- **Overwrite prompts**: Use `--force` to skip confirmation prompts
+- **Project directory**: Ensure the project directory exists before installing
 
 ## Slash Commands
 
