@@ -91,31 +91,6 @@ Create a comprehensive plan with ALL of the following sections:
 - Test automation strategy
 - Testing timeline aligned with development phases
 
-#### 7. Implementation Tickets
-Generate 8-15 implementation tickets that are:
-- More detailed than epics but less granular than individual tasks
-- Each representing 3-10 days of development work
-- Organized by development phase
-- Include clear acceptance criteria
-- Note which tickets can be worked in parallel
-- Flag tickets that may need further decomposition
-
-Format each ticket as:
-```
-### TICKET-[NUMBER]: [Title]
-**Phase:** [Phase number]
-**Estimated Effort:** [X-Y days]
-**Dependencies:** [List any dependent tickets]
-**Skills Required:** [frontend/backend/etc]
-
-**Description:**
-[2-3 sentences describing the work]
-
-**Acceptance Criteria:**
-- [ ] Criterion 1
-- [ ] Criterion 2
-- [ ] Criterion 3
-
 **Technical Notes:**
 [Any important technical considerations]
 ```
@@ -148,3 +123,4 @@ The output should include:
 - Flag any areas where the PRD conflicts with existing architecture
 - Adapt the level of detail based on feature complexity
 - Remember this is for dev managers and tech leads working on an existing project - focus on integration and consistency with current implementation
+- Do _not_ creat individual tickets for this work yet.  That will be done once this top-level plan is completed and reviewed
