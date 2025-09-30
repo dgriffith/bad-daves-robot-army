@@ -123,4 +123,4 @@ The output should include:
 - Flag any areas where the PRD conflicts with existing architecture
 - Adapt the level of detail based on feature complexity
 - Remember this is for dev managers and tech leads working on an existing project - focus on integration and consistency with current implementation
-- Do _not_ creat individual tickets for this work yet.  That will be done once this top-level plan is completed and reviewed
+- Do _not_ create individual tickets for this work yet.  That will be done once this top-level plan is completed and reviewed
