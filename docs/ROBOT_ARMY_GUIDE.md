@@ -66,6 +66,7 @@ Bad Dave's Robot Army is a comprehensive suite of Claude Code subagents and slas
 |-------|-----------|---------------|
 | **@agent-mentor** | Teaching & knowledge transfer | Learning, explanations, onboarding new recruits |
 | **@agent-junior-developer** | Learning-focused development | Fresh perspective, questioning assumptions, learning together |
+| **@agent-code-historian** | Code evolution & history analysis | Track changes, understand patterns, analyze development history |
 | **@agent-product-manager** | Requirements & planning | Feature planning, user stories, mission briefings |
 | **@agent-development-manager** | Technical planning & coordination | Breaking down complex campaigns |
 | **@agent-toolsmith** | Developer experience | Build tools, automation, weaponry upgrades |
@@ -141,7 +142,7 @@ Each review generates a comprehensive report in `/plans/` with:
 
 ### 3. The Learning & Mastery Path
 
-For understanding and knowledge transfer:
+For understanding and knowledge transfer (saves reports to `/reports`):
 
 ```bash
 # Understand the codebase
@@ -158,6 +159,27 @@ For understanding and knowledge transfer:
 
 # Deep dive into architecture
 /arch-review
+```
+
+### 4. The Code Archaeology Mission
+
+For understanding how code evolved over time (saves reports to `/plans`):
+
+```bash
+# Analyze entire project history
+/code-history
+
+# Track evolution of specific file
+/code-history src/auth.ts
+
+# Find frequently changed files
+/code-history hotspots
+
+# Discover files that change together
+/code-history co-changes
+
+# Analyze recent development
+/code-history "last 30 days"
 ```
 
 ## 🎮 Advanced Tactics
@@ -287,28 +309,36 @@ For code quality:
 ```
 
 ### The Learning Mission - Intelligence Gathering
-For understanding:
+For understanding (outputs saved to `/reports`):
 ```bash
 /codebase-overview → /explain → /learn
 ```
 
+### The Archaeological Dig - Historical Analysis
+For code evolution insights (outputs saved to `/plans`):
+```bash
+/code-history → /code-history hotspots → /code-history co-changes
+```
+
 ## 💡 Pro Tips from the Veterans
 
-1. **Use the mentor for onboarding** - `/learn this codebase` creates personalized boot camp training
+1. **Use the mentor for onboarding** - `/learn this codebase` creates personalized boot camp training (saved to `/reports`)
 
-2. **Deploy the junior developer for fresh perspectives** - `/beginners-mind` or @agent-junior-developer questions assumptions and uncovers hidden complexity
+2. **Deploy the junior developer for fresh perspectives** - `/beginners-mind` or @agent-junior-developer questions assumptions and uncovers hidden complexity (saved to `/reports`)
 
-3. **Chain reviews for comprehensive analysis** - Security → Performance → Quality (The holy trinity of code warfare)
+3. **Understand code evolution** - `/code-history` reveals patterns, hotspots, and collaboration insights (saved to `/plans`)
 
-4. **Let specialists own their domain** - @agent-database-designer for schemas, @agent-api-designer for endpoints. Trust your officers!
+4. **Chain reviews for comprehensive analysis** - Security → Performance → Quality (The holy trinity of code warfare)
 
-5. **Track complex work with todos** - Your mission control dashboard. Never lose sight of objectives!
+5. **Let specialists own their domain** - @agent-database-designer for schemas, @agent-api-designer for endpoints. Trust your officers!
 
-6. **Review PRs before merging** - `/arch-review "PR #123"` - Final inspection before deployment to production theater
+6. **Track complex work with todos** - Your mission control dashboard. Never lose sight of objectives!
 
-7. **Document as you go** - @agent-code-documentor should follow feature implementation. Leave no soldier's story untold!
+7. **Review PRs before merging** - `/arch-review "PR #123"` - Final inspection before deployment to production theater
 
-8. **Modernize incrementally** - Use `/modernization-review` to identify upgrade opportunities. Rome wasn't rebuilt in a day!
+8. **Document as you go** - @agent-code-documentor should follow feature implementation. Leave no soldier's story untold!
+
+9. **Modernize incrementally** - Use `/modernization-review` to identify upgrade opportunities. Rome wasn't rebuilt in a day!
 
 ## 🚁 Emergency Protocols - When Things Go FUBAR
 
