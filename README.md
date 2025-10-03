@@ -1,6 +1,35 @@
 # Bad Dave's Robot Army
 
-Repository for Claude Code artifacts, including subagents, slash commands, and hooks
+Your elite development force - a comprehensive suite of specialized AI agents and slash commands for Claude Code that supercharge your development workflow.
+
+## 🚀 Quick Start
+
+**New to the Robot Army?** Read the [Robot Army Guide](docs/ROBOT_ARMY_GUIDE.md) for comprehensive documentation, workflows, and battle-tested tactics.
+
+**Ready to deploy?** Install the agents and commands:
+
+```bash
+# Initial setup
+make setup
+
+# Install globally to ~/.claude/
+make install
+
+# Install to a specific project
+make install PROJECT=/path/to/project
+```
+
+## 🎯 What's Inside
+
+This repository includes **34+ slash commands** and specialized subagents organized into:
+
+- **Review & Analysis Commands** - Security, performance, architecture, testing, quality audits
+- **Code Intelligence Commands** - History analysis, evolution tracking, codebase understanding
+- **Development Workflow Commands** - PRD creation, implementation planning, issue decomposition
+- **Learning & Documentation Commands** - Explanations, mentoring, fresh perspectives
+- **Specialized Agents** - API design, database optimization, cloud architecture, and more
+
+See the [Robot Army Guide](docs/ROBOT_ARMY_GUIDE.md) for the complete arsenal and usage examples.
 
 ## License
 
@@ -106,96 +135,98 @@ The install script includes several safety features:
 - **Overwrite prompts**: Use `--force` to skip confirmation prompts
 - **Project directory**: Ensure the project directory exists before installing
 
-## Slash Commands
+## 📚 Command Categories
 
-This repository includes slash commands that invoke specialized subagents to analyze and create improvement plans for various aspects of your codebase. All commands generate reports in the `/plans` directory without making any changes to your code.
+For complete documentation, workflows, and advanced tactics, see the [Robot Army Guide](docs/ROBOT_ARMY_GUIDE.md).
 
-### Available Commands
+### Review & Analysis Commands
 
-#### `/doc-review [path]`
-Analyzes documentation coverage and creates a comprehensive documentation improvement plan.
-- **Scope**: Optional path parameter (file, directory, or module). Defaults to entire project.
-- **Output**: `plans/documentation-review-{timestamp}.md`
-- **Covers**: README files, inline comments, API docs, configuration guides, examples
+Comprehensive code analysis and improvement planning:
 
-#### `/refactor-review [path]`
-Examines code quality and identifies refactoring opportunities.
-- **Scope**: Optional path parameter. Defaults to entire project.
-- **Output**: `plans/refactoring-review-{timestamp}.md`
-- **Analyzes**: Code duplication, complexity, SOLID violations, naming clarity
+- `/security-review [scope]` - Security vulnerabilities and mitigation plans
+- `/perf-review [scope]` - Performance bottlenecks and optimization
+- `/arch-review [scope]` - Architectural patterns and design quality
+- `/test-review [scope]` - Test coverage and quality assessment
+- `/quality-review [scope]` - Overall code quality analysis
+- `/refactor-review [scope]` - Code improvement opportunities
+- `/doc-review [scope]` - Documentation coverage and clarity
+- `/accessibility-review [scope]` - WCAG compliance and usability
+- `/database-review [scope]` - Schema design and query optimization
+- `/api-review [scope]` - API design consistency and best practices
+- `/build-review [scope]` - Build system and CI/CD optimization
+- `/deployment-review [scope]` - Deployment process improvements
+- `/cloud-review [scope]` - AWS cloud architecture analysis
+- `/concurrency-review [scope]` - Thread safety and async patterns
+- `/configuration-review [scope]` - Configuration management security
+- `/internationalization-review [scope]` - i18n readiness assessment
+- `/logging-review [scope]` - Logging and observability practices
+- `/modernization-review [scope]` - Legacy code upgrade paths
+- `/tooling-review [scope]` - Developer experience improvements
 
-#### `/security-review [path]`
-Performs security analysis and creates a vulnerability mitigation plan.
-- **Scope**: Optional path parameter. Defaults to entire project.
-- **Output**: `plans/security-review-{timestamp}.md`
-- **Checks**: Hardcoded secrets, injection risks, authentication issues, OWASP compliance
+### Code Intelligence & History
 
-#### `/arch-review [path]`
-Reviews architectural patterns and structural integrity.
-- **Scope**: Optional path parameter. Defaults to entire project.
-- **Output**: `plans/architecture-review-{timestamp}.md`
-- **Evaluates**: Dependencies, SOLID principles, coupling, design patterns
+Understanding code evolution and patterns:
 
-#### `/test-review [path]`
-Assesses test coverage and testing practices.
-- **Scope**: Optional path parameter. Defaults to entire project.
-- **Output**: `plans/testing-review-{timestamp}.md`
-- **Measures**: Coverage metrics, test quality, missing test cases
+- `/code-history [scope]` - Executive summary of code evolution (quick insights)
+- `/code-history-detailed [scope]` - Comprehensive historical analysis (deep dive)
+- `/codebase-overview` - Beginner-friendly project overview
+- `/explain [topic]` - Personalized explanations of code/concepts
 
-#### `/perf-review [path]`
-Identifies performance bottlenecks and optimization opportunities.
-- **Scope**: Optional path parameter. Defaults to entire project.
-- **Output**: `plans/performance-review-{timestamp}.md`
-- **Finds**: Algorithm complexity issues, memory leaks, caching opportunities
+### Development Workflow
 
-#### `/modernization-review [path]`
-Analyzes code for outdated patterns and creates a modernization roadmap.
-- **Scope**: Optional path parameter. Defaults to entire project.
-- **Output**: `plans/modernization-review-{timestamp}.md`
-- **Identifies**: Deprecated APIs, legacy code, outdated dependencies, upgrade paths
+End-to-end feature development:
 
-#### `/tooling-review [path]`
-Evaluates developer experience and identifies tooling improvements.
-- **Scope**: Optional path parameter. Defaults to entire project.
-- **Output**: `plans/tooling-review-{timestamp}.md`
-- **Analyzes**: Setup complexity, build times, automation opportunities, workflow efficiency
+- `/create-prd [requirements]` - Generate product requirements document
+- `/process-prd-feedback [feedback]` - Incorporate stakeholder feedback into PRD
+- `/implementation-plan-from-prd [prd-file]` - Create technical implementation plan
+- `/process-implementation-plan-feedback [feedback]` - Refine implementation plan
+- `/tasks-from-plan [plan-file]` - Generate GitHub issues from plan
+- `/decompose-issue [issue-number]` - Break down complex issues
+- `/implement-issue [issue-number]` - Implement GitHub issue with appropriate specialist
 
-### Usage Examples
+### Learning & Documentation
+
+Knowledge transfer and understanding:
+
+- `/learn [topic]` - Create personalized learning path
+- `/beginners-mind [topic]` - Approach with fresh curiosity and questions
+- `/bad-daves-robot-army` - Display the complete Robot Army Guide
+
+
+### Quick Examples
 
 ```bash
-# Review documentation for entire project
-/doc-review
+# Understand a new codebase
+/codebase-overview
 
-# Analyze refactoring needs for a specific module
-/refactor-review src/services
+# Full feature workflow
+/create-prd requirements.md
+/implementation-plan-from-prd plans/prd-*.md
+/tasks-from-plan plans/implementation-plan-*.md
+/implement-issue 101
 
-# Security audit of authentication code
-/security-review src/auth
+# Code quality blitz
+/security-review "current changes"
+/perf-review src/slow-module
+/quality-review
 
-# Architecture review of API layer
-/arch-review src/api
-
-# Test coverage analysis for utils
-/test-review src/utils
-
-# Performance review of data processing
-/perf-review src/processors
-
-# Modernization assessment for legacy module
-/modernization-review src/legacy
-
-# Developer tooling and workflow analysis
-/tooling-review
+# Understand code evolution
+/code-history hotspots
+/code-history-detailed src/auth.ts
 ```
 
-### Plan Reports
+### Scope Modifiers
 
-All slash commands generate detailed markdown reports in the `/plans` directory containing:
-- Executive summary of findings
-- Current state analysis
-- Prioritized improvement tasks
-- Implementation strategies
-- Effort estimates
-- Risk assessments
+Most review commands support flexible scoping:
 
-These reports help you systematically improve your codebase by providing actionable, prioritized recommendations from specialized agents.
+- **No argument** - Analyze entire project
+- **Path** - Specific file or directory
+- **"current changes"** - Uncommitted changes only
+- **"recent changes"** - Recent commits
+- **"PR #123"** - Specific pull request
+
+### Output Locations
+
+- **Review commands** → `/plans/` directory
+- **Learning commands** → `/reports/` directory
+- **Implementation** → Direct code changes with commits
