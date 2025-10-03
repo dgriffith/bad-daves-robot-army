@@ -4,7 +4,7 @@ description: Approach code with fresh curiosity and learning mindset
 pattern: /beginners-mind(?:\s+(.+))?
 ---
 
-Using @agent-junior-developer approach the specified topic or code area with genuine curiosity and a learning mindset. Generate a thoughtful list of questions to explore and understand the topic deeply.
+Using @agent-junior-developer approach the specified topic or code area with genuine curiosity and a learning mindset. Generate a thoughtful list of questions to explore and understand the topic deeply, saving the output to the reports directory.
 
 ## Input Parsing
 The user invoked: /beginners-mind {topic_or_code_area}
@@ -17,7 +17,7 @@ Examples:
 
 ## Your Task
 
-Generate a comprehensive list of 8-12 questions that explore the topic from multiple angles. Your output should be a structured list of questions organized by category.
+Generate a comprehensive list of 8-12 questions that explore the topic from multiple angles. Save your output as a markdown file in the `/reports` directory with the format: `/reports/beginners-mind-{topic}-{timestamp}.md`
 
 ### 1. Initial Research
 First, quickly investigate the topic:
@@ -35,8 +35,8 @@ Based on your research, create questions in these categories:
 **Learning Questions** - Concepts to explore deeper
 **Improvement Questions** - Potential enhancements or concerns
 
-### 3. Output Format
-Present your questions as a clear, organized list that invites exploration and discussion. Each question should be:
+### 3. Save Output
+Create a markdown file at `/reports/beginners-mind-{topic}-{timestamp}.md` with your questions. The file should be a clear, organized list that invites exploration and discussion. Each question should be:
 - Specific and actionable
 - Genuinely curious (not rhetorical)
 - Valuable for understanding the topic

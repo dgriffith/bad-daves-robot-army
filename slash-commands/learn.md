@@ -4,7 +4,7 @@ description: Create a personalized learning path for mastering the codebase or s
 pattern: /learn(?:\s+(.+))?
 ---
 
-Using @agent-mentor create a customized learning path based on the user's goals and current knowledge level.
+Using @agent-mentor create a customized learning path based on the user's goals and current knowledge level, saving the output to the reports directory.
 
 ## Input Parsing
 The user invoked: /learn {topic_or_goal}
@@ -47,6 +47,9 @@ Create a structured learning journey:
 - Include practical exercises
 - Provide checkpoints for understanding
 - Suggest real tasks from the codebase
+
+### 4. Save Output
+Create a markdown file at `/reports/learning-path-{topic}-{timestamp}.md` with the personalized learning path.
 
 ## Learning Path Format
 

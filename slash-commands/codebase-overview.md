@@ -4,7 +4,7 @@ description: Generate a comprehensive, beginner-friendly overview of the entire 
 pattern: /codebase-overview(?:\s+(.+))?
 ---
 
-Using @agent-mentor create a comprehensive overview of the codebase tailored to the user's experience level.
+Using @agent-mentor create a comprehensive overview of the codebase tailored to the user's experience level, saving the output to the reports directory.
 
 ## Input Parsing
 The user invoked: /codebase-overview {optional_focus}
@@ -40,6 +40,9 @@ Build an overview that:
 - Highlights what matters for their goals
 - Provides clear navigation aids
 - Includes practical next steps
+
+### 4. Save Output
+Create a markdown file at `/reports/codebase-overview-{focus}-{timestamp}.md` with the comprehensive overview.
 
 ## Overview Structure
 

@@ -4,7 +4,7 @@ description: Get a personalized explanation of code, architecture, or concepts i
 pattern: /explain(?:\s+(.+))?
 ---
 
-Using @agent-mentor provide a detailed, customized explanation of the requested topic or code.
+Using @agent-mentor provide a detailed, customized explanation of the requested topic or code, saving the output to the reports directory.
 
 ## Input Parsing
 The user invoked: /explain {topic_or_path}
@@ -44,6 +44,9 @@ Create a customized explanation that:
 - Includes real examples from the codebase
 - Explains the "why" not just the "what"
 - Highlights important patterns and conventions
+
+### 4. Save Output
+Create a markdown file at `/reports/explanation-{topic}-{timestamp}.md` with the detailed explanation.
 
 ## Explanation Structure
 
