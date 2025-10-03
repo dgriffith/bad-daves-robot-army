@@ -166,7 +166,7 @@ For understanding and knowledge transfer (saves reports to `/reports`):
 For understanding how code evolved over time (saves reports to `/plans`):
 
 ```bash
-# Analyze entire project history
+# Quick executive summary - key insights fast
 /code-history
 
 # Track evolution of specific file
@@ -180,6 +180,10 @@ For understanding how code evolved over time (saves reports to `/plans`):
 
 # Analyze recent development
 /code-history "last 30 days"
+
+# Comprehensive detailed analysis - deep dive
+/code-history-detailed
+/code-history-detailed src/auth.ts
 ```
 
 ## 🎮 Advanced Tactics
@@ -317,7 +321,11 @@ For understanding (outputs saved to `/reports`):
 ### The Archaeological Dig - Historical Analysis
 For code evolution insights (outputs saved to `/plans`):
 ```bash
+# Quick insights
 /code-history → /code-history hotspots → /code-history co-changes
+
+# Deep analysis
+/code-history-detailed → comprehensive reports with full commit analysis
 ```
 
 ## 💡 Pro Tips from the Veterans
@@ -326,7 +334,7 @@ For code evolution insights (outputs saved to `/plans`):
 
 2. **Deploy the junior developer for fresh perspectives** - `/beginners-mind` or @agent-junior-developer questions assumptions and uncovers hidden complexity (saved to `/reports`)
 
-3. **Understand code evolution** - `/code-history` reveals patterns, hotspots, and collaboration insights (saved to `/plans`)
+3. **Understand code evolution** - `/code-history` for quick insights, `/code-history-detailed` for comprehensive analysis (saved to `/plans`)
 
 4. **Chain reviews for comprehensive analysis** - Security → Performance → Quality (The holy trinity of code warfare)
 
