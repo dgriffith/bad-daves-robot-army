@@ -116,11 +116,6 @@ Analysis Period: {date_range}
 4. **{Finding Title}**: {1-2 sentence explanation with data}
 5. **{Finding Title}**: {1-2 sentence explanation with data}
 
-## 💡 Recommendations
-1. **{Action}**: {Why - 1 sentence}
-2. **{Action}**: {Why - 1 sentence}
-3. **{Action}**: {Why - 1 sentence}
-
 ## 📈 Development Velocity
 - Average commits/week: {X}
 - Peak activity period: {when}
